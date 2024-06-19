@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1060213988768",
+    "firebase_url": "https://watch-app-33a31-default-rtdb.firebaseio.com",
+    "project_id": "watch-app-33a31",
+    "storage_bucket": "watch-app-33a31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060213988768:android:d6c4293afe531b4ac658c5",
+        "android_client_info": {
+          "package_name": "com.example.watchApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi67As15cyFPWXy2WVBYzPY7md7nE6UPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
