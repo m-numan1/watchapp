@@ -63,8 +63,8 @@ class _LogInPageState extends State<LogInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:
-                   EdgeInsets.symmetric(horizontal: screenWidth*.07, vertical: screenHeight*.07),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * .07, vertical: screenHeight * .07),
               child: Form(
                   child: Padding(
                 padding:
@@ -182,7 +182,7 @@ class _LogInPageState extends State<LogInPage> {
                         },
                         child: Container(
                           height: screenHeight * .08,
-                          width: screenWidth * 7,
+                          width: screenWidth * .8,
                           decoration: BoxDecoration(
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(12)),
@@ -219,8 +219,8 @@ class _LogInPageState extends State<LogInPage> {
                           GestureDetector(
                             onTap: () {},
                             child: SizedBox(
-                              height: screenHeight * .1,
-                              width: screenWidth * .1,
+                              height: screenHeight * .06,
+                              width: screenWidth * .06,
                               child: Image.asset('assets/images/google.png'),
                             ),
                           ),
@@ -229,8 +229,8 @@ class _LogInPageState extends State<LogInPage> {
                             child: GestureDetector(
                               onTap: () {},
                               child: SizedBox(
-                                height: screenHeight * .1,
-                                width: screenWidth * .1,
+                                height: screenHeight * .06,
+                                width: screenWidth * .06,
                                 child: Image.asset(
                                   'assets/images/apple.png',
                                   color: Colors.white,

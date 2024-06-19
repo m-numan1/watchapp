@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/login.dart';
 import 'package:watch_app/screens/signup.dart';
@@ -13,6 +12,8 @@ class SecondScreen extends StatefulWidget {
 class _SplashScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
@@ -20,8 +21,8 @@ class _SplashScreenState extends State<SecondScreen> {
         children: [
           Center(
             child: Container(
-              height: 165,
-              width: 147,
+              height: screenHeight * .3,
+              width: screenWidth * .6,
               child: Image.asset("assets/images/image.png"),
             ),
           ),
@@ -34,10 +35,11 @@ class _SplashScreenState extends State<SecondScreen> {
             ),
           ),
           SizedBox(
-            height: 160,
+            height: screenHeight * .2,
           ),
           Text(
             'your change starts today!',
+            style: TextStyle(color: Colors.white),
           ),
           GestureDetector(
             onTap: () {
@@ -45,8 +47,8 @@ class _SplashScreenState extends State<SecondScreen> {
                   .push(MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Container(
-              height: 45,
-              width: 300,
+              height: screenHeight * .09,
+              width: screenWidth * .7,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.orange[800]),

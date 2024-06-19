@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/1stscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:watch_app/screens/signup.dart';
 import 'package:watch_app/screens/workoutscree.dart/homewrkout.dart';
 import 'firebase_options.dart';
 
@@ -12,12 +13,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
-final FirebaseAuth auth = FirebaseAuth.instance;
+  MyApp({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +27,9 @@ final FirebaseAuth auth = FirebaseAuth.instance;
             visualDensity: VisualDensity.adaptivePlatformDensity,
             primaryColor: Colors.black,
             scaffoldBackgroundColor: Colors.black),
-        home:auth.currentUser ==null? const FirstScreen():const HomeWorkOut());
+        home: auth.currentUser == null
+            ? const FirstScreen()
+            : const HomeWorkOut());
   }
 }
 

@@ -1,13 +1,11 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/login.dart';
 
-
 class SignUpPage extends StatefulWidget {
- const SignUpPage({super.key});
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -50,12 +48,12 @@ class _SignUpPageState extends State<SignUpPage> {
           };
           users.add(data);
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) =>const LogInPage()));
+              .push(MaterialPageRoute(builder: (context) => const LogInPage()));
         },
       );
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString() )),
+        SnackBar(content: Text(e.toString())),
       );
     }
   }
@@ -79,8 +77,8 @@ class _SignUpPageState extends State<SignUpPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:
-                   EdgeInsets.symmetric(horizontal: screenWidth*.07, vertical: screenHeight*07),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * .07, vertical: screenHeight * .07),
               child: Form(
                   child: Padding(
                 padding:
@@ -216,14 +214,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           )),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: screenHeight * .04),
+                      padding: EdgeInsets.only(top: screenHeight * .06),
                       child: GestureDetector(
                         onTap: () {
                           signup();
                         },
                         child: Container(
                           height: screenHeight * .08,
-                          width: screenWidth * 7,
+                          width: screenWidth * .8,
                           decoration: BoxDecoration(
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(12)),
@@ -242,7 +240,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: screenHeight * .04, left: screenWidth * .02),
+                          top: screenHeight * .04, left: screenWidth * .01),
                       child: const Center(
                         child: Text(
                           "Or Register with",
@@ -258,15 +256,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: screenHeight * .1,
-                            width: screenWidth * .1,
+                            height: screenHeight * .06,
+                            width: screenWidth * .06,
                             child: Image.asset('assets/images/google.png'),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              height: screenHeight * .1,
-                              width: screenWidth * .1,
+                              height: screenHeight * .06,
+                              width: screenWidth * .06,
                               child: Image.asset(
                                 'assets/images/apple.png',
                                 color: Colors.white,
