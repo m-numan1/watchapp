@@ -11,15 +11,16 @@ class NewWorkOut extends StatefulWidget {
 }
 
 class _NewWorkOutState extends State<NewWorkOut> {
-  TextEditingController value = TextEditingController();
-  TextEditingController worktime = TextEditingController();
-  TextEditingController resttim = TextEditingController();
+  TextEditingController value = TextEditingController(text: '0');
+  TextEditingController worktime = TextEditingController(text: '0');
+  TextEditingController resttim = TextEditingController(text: '0');
   int? set = 0;
   void sets() {
     setState(() {});
     set = int.tryParse(value.text);
   }
 
+  String songs = '--';
   String music1 =
       "http://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3";
   String music2 =
@@ -180,7 +181,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                             });
                       },
                       child: Text(
-                        time.toString(),
+                        worktime.text,
                         style: TextStyle(color: Colors.white),
                       )),
                   SizedBox(
@@ -247,7 +248,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                             });
                       },
                       child: Text(
-                        time.toString(),
+                        resttim.text,
                         style: TextStyle(color: Colors.white),
                       ))
                 ])),
@@ -311,7 +312,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                             });
                       },
                       child: Text(
-                        set.toString(),
+                        value.text,
                         style: TextStyle(color: Colors.white),
                       ))
                 ])),
@@ -435,7 +436,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                                 child: ListTile(
                                                   onTap: () {
                                                     setState(() {
-                                                      song = lis[index];
+                                                      songs = lis[index];
                                                       Navigator.of(context)
                                                           .pop();
                                                     });
@@ -458,7 +459,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       },
                       child: Text(
                         maxLines: 1,
-                        song,
+                        songs,
                         overflow: TextOverflow.clip,
                         style: TextStyle(color: Colors.white),
                       ))
@@ -471,7 +472,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
               onPressed: () {
                 add(
                   song,
-                  song,
+                  songs,
                   set!,
                   int.parse(worktime.text),
                   int.parse(resttim.text),

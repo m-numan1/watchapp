@@ -134,45 +134,47 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: screenWidth * .08),
-                        child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5, // 3 columns
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 0.8,
-                          ),
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          padding: const EdgeInsets.all(10),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                              },
-                              child: Container(
-                                width: screenWidth * .05,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[50],
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                        color: _selectedIndex == index
-                                            ? Colors.orange
-                                            : Colors.grey,
-                                        width: 5)),
-                                child: Text(
-                                  '0${index + 1}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                        child: SizedBox(
+                          width: screenWidth,
+                          height: screenHeight * .2,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            padding: EdgeInsets.only(left: screenWidth * .008),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedIndex = index;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.all(screenWidth * .04),
+                                  child: Container(
+                                    width: screenWidth * .09,
+                                    height: screenHeight * .01,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue[50],
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                            color: _selectedIndex == index
+                                                ? Colors.orange
+                                                : Colors.grey,
+                                            width: 5)),
+                                    child: Text(
+                                      '0${index + 1}',
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                       //   StreamBuilder<QuerySnapshot>(
