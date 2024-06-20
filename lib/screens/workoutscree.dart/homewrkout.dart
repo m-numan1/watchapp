@@ -47,7 +47,7 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
 
   @override
   Widget build(BuildContext context) {
-    //fetchdata();
+    fetchdata();
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
