@@ -46,22 +46,25 @@ class _WorkPageState extends State<WorkPage> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
+  String music3 =
+      "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   final player = AudioPlayer();
 
-  void increment() async {
-    await player.play(volume: 100, UrlSource(widget.wrkmusic));
+  Future<void> increment() async {
+    await player.play(volume: volume, UrlSource(music3));
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
+      val--;
       setState(() {
         if (set == int.parse(widget.set)) {
           player.stop();
         }
         newval++;
-        val--;
+
         if (val < 1) {
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
@@ -140,7 +143,7 @@ class _WorkPageState extends State<WorkPage> {
             Padding(
               padding: EdgeInsets.only(
                 left: screenWidth * .06,
-                right: (screenWidth - (newval * 20)).clamp(0, double.infinity),
+                right: (screenWidth - (newval * 15)).clamp(0, double.infinity),
               ),
               child: Image.asset('assets/images/vector.png'),
             ),
@@ -174,7 +177,7 @@ class _WorkPageState extends State<WorkPage> {
                     left: screenWidth * .07,
                   ),
                   child: Container(
-                    width: newval * 10,
+                    width: newval * 7,
                     height: screenHeight * .095,
                     decoration: BoxDecoration(
                         color: Colors.orange,
@@ -225,7 +228,8 @@ class _WorkPageState extends State<WorkPage> {
                           SizedBox(
                             height: 8,
                           ),
-                          Text("${set.toString()}/${widget.set}",style: TextStyle(color: Colors.white)),
+                          Text("${set.toString()}/${widget.set}",
+                              style: TextStyle(color: Colors.white)),
                         ]),
                       )),
             ),
@@ -259,8 +263,8 @@ class _WorkPageState extends State<WorkPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      increment();
+                    onTap: () async {
+                      await increment();
                     },
                     child: Container(
                       height: screenHeight * .06,

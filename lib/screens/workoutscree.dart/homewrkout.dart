@@ -69,7 +69,7 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                       Padding(
                         padding: EdgeInsets.only(
                             left: screenWidth * .08,
-                            right: screenHeight * .08,
+                            right: screenHeight * .03,
                             top: screenHeight * .06),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +136,7 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                             EdgeInsets.symmetric(horizontal: screenWidth * .08),
                         child: SizedBox(
                           width: screenWidth,
-                          height: screenHeight * .2,
+                          height: screenHeight * .15,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -150,9 +150,12 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                                   });
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.all(screenWidth * .04),
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth * .04,
+                                      right: screenWidth * .02,
+                                      bottom: screenHeight * .04),
                                   child: Container(
-                                    width: screenWidth * .09,
+                                    width: screenWidth * .1,
                                     height: screenHeight * .01,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
@@ -244,6 +247,7 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                           : Padding(
                               padding: EdgeInsets.only(top: screenHeight * .06),
                               child: ListView.builder(
+                                scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemCount: dataList.length,
                                 itemBuilder: (context, index) {

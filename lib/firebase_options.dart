@@ -77,12 +77,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCi67As15cyFPWXy2WVBYzPY7md7nE6UPw',
-    appId: '1:1060213988768:android:d6c4293afe531b4ac658c5',
-    messagingSenderId: '1060213988768',
-    projectId: 'watch-app-33a31',
-    databaseURL: 'https://watch-app-33a31-default-rtdb.firebaseio.com',
-    storageBucket: 'watch-app-33a31.appspot.com',
+    apiKey: 'AIzaSyCCLyV3clGNh1eSeXMIWcf3ks7rC3xvbhQ',
+    appId: '1:823612926364:android:ecb17c340c346b7b4dc059',
+    messagingSenderId: '823612926364',
+    projectId: 'watch-app1-60ddd',
+    storageBucket: 'watch-app1-60ddd.appspot.com',
   );
 
 }

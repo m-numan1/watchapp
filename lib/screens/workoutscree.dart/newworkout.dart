@@ -69,7 +69,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
             padding: EdgeInsets.only(
-                left: screenWidth * .09, right: screenWidth * .09, bottom: 25),
+                left: screenWidth * .09, right: screenWidth * .09, bottom: screenHeight*.1,top:screenHeight*.1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
