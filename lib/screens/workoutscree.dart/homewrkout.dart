@@ -52,217 +52,212 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      'assets/images/gym.jpeg',
-                    ),
-                    opacity: 0.4)),
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: screenWidth * .08,
-                            right: screenHeight * .03,
-                            top: screenHeight * .06),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Home',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.black,
-                              backgroundImage:
-                                  AssetImage('assets/images/gym.jpeg'),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * .08,
-                            vertical: screenHeight * .06),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'New WorkOut',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 17),
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) => NewWorkOut(
-                                                    day: (_selectedIndex + 1)
-                                                        .toString(),
-                                                  )));
-                                    },
-                                    icon: const Icon(
-                                      size: 30,
-                                      Icons.add_circle_outline_sharp,
-                                      color: Colors.orange,
-                                    )),
-                                IconButton(
-                                    onPressed: () {
-                                      // Navigator.of(context).push(MaterialPageRoute(
-                                      //     builder: (context) => const WorkPage()));
-                                    },
-                                    icon: const Icon(
-                                      size: 30,
-                                      Icons.save,
-                                      color: Colors.orange,
-                                    )),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: screenWidth * .08),
-                        child: SizedBox(
-                          width: screenWidth,
-                          height: screenHeight * .15,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            padding: EdgeInsets.only(left: screenWidth * .008),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedIndex = index;
-                                  });
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: screenWidth * .04,
-                                      right: screenWidth * .02,
-                                      bottom: screenHeight * .04),
-                                  child: Container(
-                                    width: screenWidth * .1,
-                                    height: screenHeight * .01,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: Colors.blue[50],
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(
-                                            color: _selectedIndex == index
-                                                ? Colors.orange
-                                                : Colors.grey,
-                                            width: 5)),
-                                    child: Text(
-                                      '0${index + 1}',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+      width: screenWidth,
+      height: screenHeight,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage(
+                'assets/images/gym.jpeg',
+              ),
+              opacity: 0.4)),
+      child: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: screenWidth * .08,
+                right: screenHeight * .03,
+                top: screenHeight * .06),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Home',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  backgroundImage: AssetImage('assets/images/gym.jpeg'),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * .08, vertical: screenHeight * .06),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'New WorkOut',
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => NewWorkOut(
+                                    day: (_selectedIndex + 1).toString(),
+                                  )));
+                        },
+                        icon: const Icon(
+                          size: 30,
+                          Icons.add_circle_outline_sharp,
+                          color: Colors.orange,
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const WorkPage()));
+                        },
+                        icon: const Icon(
+                          size: 30,
+                          Icons.save,
+                          color: Colors.orange,
+                        )),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * .08),
+            child: SizedBox(
+              width: screenWidth,
+              height: screenHeight * .15,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: 5,
+                padding: EdgeInsets.only(left: screenWidth * .008),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: screenWidth * .04,
+                          right: screenWidth * .02,
+                          bottom: screenHeight * .04),
+                      child: Container(
+                        width: screenWidth * .1,
+                        height: screenHeight * .01,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.blue[50],
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                                color: _selectedIndex == index
+                                    ? Colors.orange
+                                    : Colors.grey,
+                                width: 5)),
+                        child: Text(
+                          '0${index + 1}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      //   StreamBuilder<QuerySnapshot>(
-                      //     stream: FirebaseFirestore.instance
-                      //         .collection('users')
-                      //         .doc('days')
-                      //         .collection((_selectedIndex + 1).toString())
-                      //         .snapshots(),
-                      //     builder: (BuildContext context,
-                      //         AsyncSnapshot<QuerySnapshot> snapshot) {
-                      //       if (snapshot.connectionState ==
-                      //           ConnectionState.waiting) {
-                      //         return Center(child: CircularProgressIndicator());
-                      //       }
-                      //       if (snapshot.hasData) {
-                      //         List<Map<String, dynamic>> data;
-                      //         dataList = snapshot.data!.docs
-                      //             .map(
-                      //                 (doc) => doc.data() as Map<String, dynamic>)
-                      //             .toList();
-                      //         // dataList = snapshot.data!.docs
-                      //         //     .map(
-                      //         //         (doc) => doc.data() as Map<String, dynamic>)
-                      //         //     .toList();
-                      //         print("${dataList} list");
-                      //         print('if');
-                      //         return Padding(
-                      //           padding: EdgeInsets.only(top: screenHeight * .06),
-                      //           child: ListView.builder(
-                      //             shrinkWrap: true,
-                      //             itemCount: snapshot.data!.docs.length,
-                      //             itemBuilder: (context, index) {
-                      //               //var data = snapshot.data?.docs;
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          //   StreamBuilder<QuerySnapshot>(
+          //     stream: FirebaseFirestore.instance
+          //         .collection('users')
+          //         .doc('days')
+          //         .collection((_selectedIndex + 1).toString())
+          //         .snapshots(),
+          //     builder: (BuildContext context,
+          //         AsyncSnapshot<QuerySnapshot> snapshot) {
+          //       if (snapshot.connectionState ==
+          //           ConnectionState.waiting) {
+          //         return Center(child: CircularProgressIndicator());
+          //       }
+          //       if (snapshot.hasData) {
+          //         List<Map<String, dynamic>> data;
+          //         dataList = snapshot.data!.docs
+          //             .map(
+          //                 (doc) => doc.data() as Map<String, dynamic>)
+          //             .toList();
+          //         // dataList = snapshot.data!.docs
+          //         //     .map(
+          //         //         (doc) => doc.data() as Map<String, dynamic>)
+          //         //     .toList();
+          //         print("${dataList} list");
+          //         print('if');
+          //         return Padding(
+          //           padding: EdgeInsets.only(top: screenHeight * .06),
+          //           child: ListView.builder(
+          //             shrinkWrap: true,
+          //             itemCount: snapshot.data!.docs.length,
+          //             itemBuilder: (context, index) {
+          //               //var data = snapshot.data?.docs;
 
-                      //               return FetchWork(
-                      //                 set: dataList[index]['sets'].toString(),
-                      //                 worktime: dataList[index]['worktime'],
-                      //                 resttime: dataList[index]['resttime'],
-                      //                 restmusic: dataList[index]['restMusic'],
-                      //                 wrkmusic: dataList[index]['workMusic'],
-                      //               );
-                      //             },
-                      //           ),
-                      //         );
-                      //       }
-                      //       if (snapshot.hasError) {
-                      //         return Center(
-                      //             child: Text('Error: ${snapshot.error}'));
-                      //       }
-                      //       if (!snapshot.hasData ||
-                      //           snapshot.data!.docs.isEmpty) {
-                      //         return Center(child: Text('No data available'));
-                      //       }
+          //               return FetchWork(
+          //                 set: dataList[index]['sets'].toString(),
+          //                 worktime: dataList[index]['worktime'],
+          //                 resttime: dataList[index]['resttime'],
+          //                 restmusic: dataList[index]['restMusic'],
+          //                 wrkmusic: dataList[index]['workMusic'],
+          //               );
+          //             },
+          //           ),
+          //         );
+          //       }
+          //       if (snapshot.hasError) {
+          //         return Center(
+          //             child: Text('Error: ${snapshot.error}'));
+          //       }
+          //       if (!snapshot.hasData ||
+          //           snapshot.data!.docs.isEmpty) {
+          //         return Center(child: Text('No data available'));
+          //       }
 
-                      //       return Text('Nothing');
-                      //     },
-                      //   ),
-                      // ])
+          //       return Text('Nothing');
+          //     },
+          //   ),
+          // ])
 
-                      dataList.isEmpty
-                          ? Center(
-                              child: Text(
-                                "No workout for this day",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          : Padding(
-                              padding: EdgeInsets.only(top: screenHeight * .06),
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: dataList.length,
-                                itemBuilder: (context, index) {
-                                  print(dataList);
-                                  return FetchWork(
-                                    set: dataList[index]['sets'].toString(),
-                                    worktime: dataList[index]['worktime'],
-                                    resttime: dataList[index]['resttime'],
-                                    restmusic: dataList[index]['restMusic'],
-                                    wrkmusic: dataList[index]['workMusic'],
-                                  );
-                                },
-                              ),
-                            )
-                    ]))));
+          dataList.isEmpty
+              ? Center(
+                  child: Text(
+                    "No workout for this day",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              : SizedBox(
+                  height: screenHeight * .7,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: screenHeight * .03),
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: dataList.length,
+                      itemBuilder: (context, index) {
+                        //print(dataList);
+                        return FetchWork(
+                          set: dataList[index]['sets'].toString(),
+                          worktime: dataList[index]['worktime'],
+                          resttime: dataList[index]['resttime'],
+                          restmusic: dataList[index]['restMusic'],
+                          wrkmusic: dataList[index]['workMusic'],
+                        );
+                      },
+                    ),
+                  ),
+                )
+        ]),
+      ),
+    ));
   }
 }
 

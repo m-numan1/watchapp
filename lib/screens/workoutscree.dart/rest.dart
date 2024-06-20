@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/widgets/music.dart';
-import 'package:watch_app/widgets/reps.dart';
-import 'package:watch_app/widgets/workmusicplaylist.dart';
 
 class RestPage extends StatefulWidget {
-  String resttime, restmusic,set;
-  RestPage({super.key, required this.resttime, required this.restmusic,required this.set});
+  String resttime, restmusic, set;
+  RestPage(
+      {super.key,
+      required this.resttime,
+      required this.restmusic,
+      required this.set});
 
   @override
   State<RestPage> createState() => _RestPageState();
@@ -24,11 +27,11 @@ class _RestPageState extends State<RestPage> {
     increment();
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timer.cancel();
+  //   super.dispose();
+  // }
 
   void navigateToSecondScreenAfterDelay() {
     Timer(Duration(seconds: 15), () {
@@ -36,14 +39,17 @@ class _RestPageState extends State<RestPage> {
     });
   }
 
-  void increment() {
+  final player = AudioPlayer();
+  Future<void> increment() async {
+    await player.play(volume: volume, UrlSource(widget.restmusic));
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
-      setState(() {
+      setState(()  {
         val--;
         newval++;
         if (val < 1) {
           set++;
+           player.stop();
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
           Future.delayed(Duration(seconds: 10)).then((_) {
@@ -189,7 +195,7 @@ class _RestPageState extends State<RestPage> {
             Padding(
               padding: EdgeInsets.only(top: screenHeight * .09),
               child: //Sets(),
-               Padding(
+                  Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                         width: screenWidth * .5,
@@ -207,8 +213,7 @@ class _RestPageState extends State<RestPage> {
                         ]),
                       )),
             ),
-           
-        
+
             //const Musicwrk2(),
             Music(
               music: widget.restmusic,
@@ -259,6 +264,9 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
+                    onTap: ()async {
+                      await player.stop();
+                    },
                     child: Container(
                       height: screenHeight * .06,
                       width: screenWidth * .17,
@@ -275,6 +283,9 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
+                    onTap: ()async{
+                      await player.resume();
+                    },
                     child: Container(
                       height: screenHeight * .06,
                       width: screenWidth * .17,

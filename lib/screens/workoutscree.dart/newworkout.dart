@@ -14,19 +14,21 @@ class _NewWorkOutState extends State<NewWorkOut> {
   TextEditingController value = TextEditingController(text: '0');
   TextEditingController worktime = TextEditingController(text: '0');
   TextEditingController resttim = TextEditingController(text: '0');
+  TextEditingController wrkmnlsong = TextEditingController();
+  TextEditingController restmsic = TextEditingController();
   int? set = 0;
   void sets() {
     setState(() {});
     set = int.tryParse(value.text);
   }
 
-  String songs = '--';
+  String songs = '00';
   String music1 =
-      "http://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3";
+      "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   String music2 =
-      "http://codeskulptor-demos.commondatastorage.googleapis.com/descent/background%20music.mp3";
+      "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   String music3 =
-      "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3";
+      "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
 
   List lis = [];
   String song = '...';
@@ -55,6 +57,12 @@ class _NewWorkOutState extends State<NewWorkOut> {
     lis = [music1, music2, music3];
   }
 
+  void setMusicmanually() {
+    setState(() {
+      song = wrkmnlsong.text;
+    });
+  }
+
   int time = 0;
   @override
   Widget build(BuildContext context) {
@@ -69,7 +77,10 @@ class _NewWorkOutState extends State<NewWorkOut> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
             padding: EdgeInsets.only(
-                left: screenWidth * .09, right: screenWidth * .09, bottom: screenHeight*.1,top:screenHeight*.1),
+                left: screenWidth * .09,
+                right: screenWidth * .09,
+                bottom: screenHeight * .1,
+                top: screenHeight * .1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -77,7 +88,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -171,7 +182,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                             ElevatedButton(
                                               onPressed: () {
                                                 sets();
-                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
                                               },
                                               child: Text('Set'),
                                             )
@@ -348,7 +359,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                     child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text('Select Music',
+                                          Text('Select Music by clicking',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 18)),
@@ -377,9 +388,57 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                           SizedBox(height: 10), // Add spacing
                                           ElevatedButton(
                                             onPressed: () {
-                                              Navigator.of(context).pop();
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      // backgroundColor: Colors
+                                                      //     .grey[900], // Set background color for dialog
+                                                      content: Container(
+                                                          width: screenWidth *
+                                                              0.4, // Responsive width
+                                                          height: screenHeight *
+                                                              0.2,
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Container(
+                                                                    width:
+                                                                        screenWidth *
+                                                                            .4,
+                                                                    child:
+                                                                        TextField(
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                              enabledBorder: OutlineInputBorder()),
+                                                                      controller:
+                                                                          wrkmnlsong,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height: screenHeight *
+                                                                          .05), // Add spacing
+                                                                  ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      setMusicmanually();
+                                                                    },
+                                                                    child: Text(
+                                                                        'Set'),
+                                                                  )
+                                                                ]),
+                                                          )),
+                                                    );
+                                                  });
                                             },
-                                            child: Text('Set'),
+                                            child: Text('Chose manually'),
                                           )
                                         ])),
                               );
@@ -449,9 +508,64 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                           SizedBox(height: 10), // Add spacing
                                           ElevatedButton(
                                             onPressed: () {
-                                              Navigator.of(context).pop();
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      // backgroundColor: Colors
+                                                      //     .grey[900], // Set background color for dialog
+                                                      content: Container(
+                                                          width: screenWidth *
+                                                              0.4, // Responsive width
+                                                          height: screenHeight *
+                                                              0.2,
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Container(
+                                                                    width:
+                                                                        screenWidth *
+                                                                            .4,
+                                                                    child:
+                                                                        TextField(
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                              enabledBorder: OutlineInputBorder()),
+                                                                      controller:
+                                                                          restmsic,
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .number,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height: screenHeight *
+                                                                          .05), // Add spacing
+                                                                  ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      setState(
+                                                                          () {
+                                                                        restmusic =
+                                                                            restmsic.text;
+                                                                      });
+                                                                    },
+                                                                    child: Text(
+                                                                        'Set'),
+                                                                  )
+                                                                ]),
+                                                          )),
+                                                    );
+                                                  });
                                             },
-                                            child: Text('Set'),
+                                            child: Text('Chose Manually'),
                                           )
                                         ])),
                               );

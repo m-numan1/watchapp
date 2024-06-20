@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/workoutscree.dart/rest.dart';
 import 'package:watch_app/widgets/music.dart';
+import 'package:watch_app/widgets/musicwrk.dart';
 import 'package:watch_app/widgets/reps.dart';
 import 'package:watch_app/widgets/workmusicplaylist.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -44,18 +45,18 @@ class _WorkPageState extends State<WorkPage> {
                 )));
   }
 
-  @override
-  void dispose() {
-    // _timer.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // _timer.cancel();
+  //   super.dispose();
+  // }
 
-  String music3 =
-      "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
+  // String music3 =
+  //     "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   final player = AudioPlayer();
 
   Future<void> increment() async {
-    await player.play(volume: volume, UrlSource(music3));
+    await player.play(volume: volume, UrlSource(widget.wrkmusic));
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
       val--;
@@ -66,6 +67,7 @@ class _WorkPageState extends State<WorkPage> {
         newval++;
 
         if (val < 1) {
+          player.stop();
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
           Future.delayed(Duration(seconds: 10)).then((_) {
@@ -108,7 +110,7 @@ class _WorkPageState extends State<WorkPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Navigator.pop(context);
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -233,8 +235,8 @@ class _WorkPageState extends State<WorkPage> {
                         ]),
                       )),
             ),
-            Music(
-              music: widget.restmusic,
+            MusicWrk(
+              music: widget.wrkmusic,
             ),
             Padding(
               padding: EdgeInsets.only(top: screenHeight * .04),

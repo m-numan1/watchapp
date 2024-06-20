@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watch_app/screens/workoutscree.dart/homewrkout.dart';
 import 'package:watch_app/screens/workoutscree.dart/newworkout.dart';
 import 'package:watch_app/screens/workoutscree.dart/work.dart';
 
@@ -45,7 +46,8 @@ class _StartWorkState extends State<StartWork> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>const HomeWorkOut()));
                           },
                           child: Container(
                             decoration: const BoxDecoration(
