@@ -25,10 +25,13 @@ class _MusicWrkState extends State<MusicWrk> {
           child: Column(children: [
             Text(
               'WorkOut Music ',
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             ),
             Text(widget.music ?? " ",
-                maxLines: 1, style: TextStyle(color: Colors.white)),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(color: Colors.white)),
           ])),
     );
   }

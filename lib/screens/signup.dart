@@ -277,23 +277,26 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: EdgeInsets.only(
                           left: screenWidth * .04, top: screenHeight * .03),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Already Have an Account?',
-                            style: TextStyle(color: Colors.white70),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const LogInPage()));
-                            },
-                            child: Text(
-                              'LogIn',
-                              style: TextStyle(color: Colors.orange),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Already Have an Account?',
+                              style: TextStyle(color: Colors.white70),
                             ),
-                          )
-                        ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const LogInPage()));
+                              },
+                              child: Text(
+                                'LogIn',
+                                style: TextStyle(color: Colors.orange),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],

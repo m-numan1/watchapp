@@ -37,9 +37,12 @@ class _SplashScreenState extends State<SecondScreen> {
           SizedBox(
             height: screenHeight * .2,
           ),
-          Text(
-            'your change starts today!',
-            style: TextStyle(color: Colors.white),
+          Padding(
+            padding: EdgeInsets.only(bottom: screenHeight * .04),
+            child: Text(
+              'your change starts today!',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           GestureDetector(
             onTap: () {
@@ -47,8 +50,8 @@ class _SplashScreenState extends State<SecondScreen> {
                   .push(MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Container(
-              height: screenHeight * .09,
-              width: screenWidth * .7,
+              height: screenHeight * .06,
+              width: screenWidth * .6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.orange[800]),
@@ -67,30 +70,32 @@ class _SplashScreenState extends State<SecondScreen> {
           SizedBox(
             height: 15,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Already Have an account? ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LogInPage()));
-                },
-                child: Text(
-                  'Sign in',
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Already Have an account? ',
                   style: TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w200,
                   ),
                 ),
-              )
-            ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const LogInPage()));
+                  },
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

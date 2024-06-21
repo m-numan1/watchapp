@@ -44,19 +44,18 @@ class _RestPageState extends State<RestPage> {
     await player.play(volume: volume, UrlSource(widget.restmusic));
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
-      setState(()  {
+      setState(() {
         val--;
         newval++;
         if (val < 1) {
+          val = 15;
           set++;
-           player.stop();
+          player.stop();
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
           Future.delayed(Duration(seconds: 10)).then((_) {
             setState(() {
               newval = 1;
-
-              val = 15;
             });
           }); //int.parse(widget.resttime);
         }
@@ -140,7 +139,7 @@ class _RestPageState extends State<RestPage> {
                       child: Padding(
                         padding: EdgeInsets.only(left: screenWidth * .65),
                         child: Text(
-                          "00:${val}",
+                          "0:${val}",
                           style: const TextStyle(
                               color: Colors.orange,
                               fontSize: 15,
@@ -264,7 +263,7 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: ()async {
+                    onTap: () async {
                       await player.stop();
                     },
                     child: Container(
@@ -283,7 +282,7 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: ()async{
+                    onTap: () async {
                       await player.resume();
                     },
                     child: Container(

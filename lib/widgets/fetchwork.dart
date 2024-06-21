@@ -12,7 +12,7 @@ class FetchWork extends StatefulWidget {
     required this.restmusic,
   });
   int worktime, resttime;
-  String wrkmusic, restmusic,set;
+  String wrkmusic, restmusic, set;
   Function? funct;
   @override
   State<FetchWork> createState() => _FetchWorkState();
@@ -29,7 +29,7 @@ class _FetchWorkState extends State<FetchWork> {
           right: screenWidth * .09,
           bottom: screenHeight * .09),
       child: Container(
-        width: double.infinity,
+        width: screenWidth,
         height: screenHeight * .12,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -37,36 +37,53 @@ class _FetchWorkState extends State<FetchWork> {
             border: Border.all(color: Colors.orange, width: 9)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
-              children: [
-                Text(
-                  'Work Time',
-                  style: const TextStyle(color: Colors.black),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    widget.worktime.toString(),
-                    style: const TextStyle(color: Colors.black),
+            Padding(
+              padding: EdgeInsets.only(top: screenHeight * .004),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Work Time',
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * .004),
+                    child: Text(
+                      "00:" + widget.worktime.toString(),
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  )
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Text(
-                  "Rest Time",
-                  style: const TextStyle(color: Colors.black),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    widget.resttime.toString(),
-                    style: const TextStyle(color: Colors.black),
+            Padding(
+              padding: EdgeInsets.only(top: screenHeight * .004),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "Rest Time",
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * .004),
+                    child: Text(
+                      "00:" + widget.resttime.toString(),
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  )
+                ],
+              ),
             ),
             Container(
               height: screenHeight * .09,
@@ -75,10 +92,15 @@ class _FetchWorkState extends State<FetchWork> {
               child: Center(
                 child: IconButton(
                     onPressed: () {
-                  
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                            builder: (context) =>  StartWork(set:widget.set,worktime: widget.worktime,wrkmusic: widget.wrkmusic,restime: widget.resttime,restmusic: widget.restmusic,)),
+                            builder: (context) => StartWork(
+                                  set: widget.set,
+                                  worktime: widget.worktime,
+                                  wrkmusic: widget.wrkmusic,
+                                  restime: widget.resttime,
+                                  restmusic: widget.restmusic,
+                                )),
                       );
                     },
                     icon: const Icon(

@@ -16,6 +16,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
   TextEditingController resttim = TextEditingController(text: '0');
   TextEditingController wrkmnlsong = TextEditingController();
   TextEditingController restmsic = TextEditingController();
+
   int? set = 0;
   void sets() {
     setState(() {});
@@ -57,30 +58,46 @@ class _NewWorkOutState extends State<NewWorkOut> {
     lis = [music1, music2, music3];
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    value.dispose();
+    worktime.dispose();
+    restmsic.dispose();
+    resttim.dispose();
+    wrkmnlsong.dispose();
+  }
+
   void setMusicmanually() {
     setState(() {
       song = wrkmnlsong.text;
     });
   }
 
-  int time = 0;
+  void setRMusicmanually() {
+    setState(() {
+      restmusic = restmsic.text;
+    });
+  }
+
+  int time = 00;
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        decoration: BoxDecoration(
-            image:
-                DecorationImage(image: AssetImage('assets/images/gym.jpeg'))),
+        body: Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/gym.jpeg'), fit: BoxFit.fill)),
+      child: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
             padding: EdgeInsets.only(
                 left: screenWidth * .09,
                 right: screenWidth * .09,
-                bottom: screenHeight * .1,
-                top: screenHeight * .1),
+                bottom: screenHeight * .03,
+                top: screenHeight * .07),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -118,469 +135,452 @@ class _NewWorkOutState extends State<NewWorkOut> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 14.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: screenHeight * .06,
-                width: screenWidth * .3,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue),
-                child: Center(
-                    child: Text(
-                  'New Timer',
-                  style: TextStyle(color: Colors.white),
-                )),
-              ),
+            padding: EdgeInsets.only(bottom: screenHeight * .04),
+            child: Container(
+              height: screenHeight * .06,
+              width: screenWidth * .3,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15), color: Colors.blue),
+              child: Center(
+                  child: Text(
+                'New Timer',
+                style: TextStyle(color: Colors.white),
+              )),
             ),
           ),
 
           // Workouttime(),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Container(
-                width: screenWidth * .5,
-                height: screenHeight * .08,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Column(children: [
-                  Text('Work out Time', style: TextStyle(color: Colors.white)),
-                  GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                // backgroundColor: Colors
-                                //     .grey[900], // Set background color for dialog
-                                content: Container(
-                                    width:
-                                        screenWidth * 0.4, // Responsive width
-                                    height: screenHeight * 0.2,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: screenWidth * .4,
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder()),
-                                                controller: worktime,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                height: screenHeight *
-                                                    .05), // Add spacing
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                sets();
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text('Set'),
-                                            )
-                                          ]),
-                                    )),
-                              );
-                            });
-                      },
-                      child: Text(
-                        worktime.text,
-                        style: TextStyle(color: Colors.white),
-                      )),
-                  SizedBox(
-                    height: 6,
-                  )
-                ])),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.orange,
+                        // backgroundColor: Colors
+                        //     .grey[900], // Set background color for dialog
+                        content: Container(
+                            width: screenWidth * 0.4, // Responsive width
+                            height: screenHeight * 0.2,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: screenWidth * .4,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            enabledBorder:
+                                                OutlineInputBorder()),
+                                        controller: worktime,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            screenHeight * .05), // Add spacing
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        sets();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Set'),
+                                    )
+                                  ]),
+                            )),
+                      );
+                    });
+              },
+              child: Container(
+                  width: screenWidth * .5,
+                  height: screenHeight * .09,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Column(children: [
+                    Text('Work out Time',
+                        style: TextStyle(color: Colors.white)),
+                    SizedBox(
+                      height: screenHeight * .01,
+                    ),
+                    Text(
+                      "00:" + worktime.text,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ])),
+            ),
           ),
           // Resttime(),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Container(
-                width: screenWidth * .5,
-                height: screenHeight * .08,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Column(children: [
-                  Text('Rest Time', style: TextStyle(color: Colors.white)),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                // backgroundColor: Colors
-                                //     .grey[900], // Set background color for dialog
-                                content: Container(
-                                    width:
-                                        screenWidth * 0.4, // Responsive width
-                                    height: screenHeight * 0.2,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: screenWidth * .4,
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder()),
-                                                controller: resttim,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                height: screenHeight *
-                                                    .05), // Add spacing
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                sets();
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Set'),
-                                            )
-                                          ]),
-                                    )),
-                              );
-                            });
-                      },
-                      child: Text(
-                        resttim.text,
-                        style: TextStyle(color: Colors.white),
-                      ))
-                ])),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.orange,
+                        // backgroundColor: Colors
+                        //     .grey[900], // Set background color for dialog
+                        content: Container(
+                            width: screenWidth * 0.4, // Responsive width
+                            height: screenHeight * 0.2,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: screenWidth * .4,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            enabledBorder:
+                                                OutlineInputBorder()),
+                                        controller: resttim,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            screenHeight * .05), // Add spacing
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        sets();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Set'),
+                                    )
+                                  ]),
+                            )),
+                      );
+                    });
+              },
+              child: Container(
+                  width: screenWidth * .5,
+                  height: screenHeight * .09,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Column(children: [
+                    Text('Rest Time', style: TextStyle(color: Colors.white)),
+                    SizedBox(
+                      height: screenHeight * .01,
+                    ),
+                    Text(
+                      "00:" + resttim.text,
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ])),
+            ),
           ),
           // Sets(),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-                width: screenWidth * .5,
-                height: screenHeight * .095,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Column(children: [
-                  Text('Sets', style: TextStyle(color: Colors.white)),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                // backgroundColor: Colors
-                                //     .grey[900], // Set background color for dialog
-                                content: Container(
-                                    width:
-                                        screenWidth * 0.4, // Responsive width
-                                    height: screenHeight * 0.2,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: screenWidth * .4,
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder()),
-                                                controller: value,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                height: screenHeight *
-                                                    .05), // Add spacing
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                sets();
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Set'),
-                                            )
-                                          ]),
-                                    )),
-                              );
-                            });
-                      },
-                      child: Text(
-                        value.text,
-                        style: TextStyle(color: Colors.white),
-                      ))
-                ])),
+            padding: EdgeInsets.only(top: screenHeight * .020),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor:
+                            Colors.orange, // Set background color for dialog
+                        content: Container(
+                            color: Colors.orange,
+                            width: screenWidth * 0.4, // Responsive width
+                            height: screenHeight * 0.2,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: screenWidth * .4,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            enabledBorder:
+                                                OutlineInputBorder()),
+                                        controller: value,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        height:
+                                            screenHeight * .05), // Add spacing
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        sets();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Set'),
+                                    )
+                                  ]),
+                            )),
+                      );
+                    });
+              },
+              child: Container(
+                  width: screenWidth * .5,
+                  height: screenHeight * .09,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Column(children: [
+                    Text('Sets', style: TextStyle(color: Colors.white)),
+                    SizedBox(
+                      height: screenHeight * .01,
+                    ),
+                    Text(
+                      value.text,
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ])),
+            ),
           ),
           // Musicwrk(),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-                width: screenWidth * .5,
-                height: screenHeight * .09,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Column(children: [
-                  Text('Work Music PlayList',
-                      style: TextStyle(color: Colors.white)),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                backgroundColor: Colors.grey[
-                                    900], // Set background color for dialog
-                                content: Container(
-                                    width:
-                                        screenWidth * 0.8, // Responsive width
-                                    height: screenHeight * 0.7,
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text('Select Music by clicking',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18)),
-                                          SizedBox(height: 10), // Add spacing{}
-                                          Expanded(
-                                            child: ListView.builder(
-                                              itemCount: lis.length,
-                                              itemBuilder: (context, index) =>
-                                                  Card(
-                                                child: ListTile(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      song = lis[index];
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    });
-                                                  },
-                                                  title: Text(
-                                                    lis[index],
-                                                    overflow: TextOverflow.fade,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+            padding: EdgeInsets.only(top: screenHeight * .03),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor:
+                            Colors.orange, // Set background color for dialog
+                        content: Container(
+                            width: screenWidth * 0.8, // Responsive width
+                            height: screenHeight * 0.7,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Select Music by clicking',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18)),
+                                  SizedBox(height: 10), // Add spacing{}
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: lis.length,
+                                      itemBuilder: (context, index) => Card(
+                                        child: ListTile(
+                                          onTap: () {
+                                            setState(() {
+                                              song = lis[index];
+                                              Navigator.of(context).pop();
+                                            });
+                                          },
+                                          title: Text(
+                                            lis[index],
+                                            overflow: TextOverflow.fade,
                                           ),
-                                          SizedBox(height: 10), // Add spacing
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      // backgroundColor: Colors
-                                                      //     .grey[900], // Set background color for dialog
-                                                      content: Container(
-                                                          width: screenWidth *
-                                                              0.4, // Responsive width
-                                                          height: screenHeight *
-                                                              0.2,
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.vertical,
-                                                            child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                children: [
-                                                                  Container(
-                                                                    width:
-                                                                        screenWidth *
-                                                                            .4,
-                                                                    child:
-                                                                        TextField(
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                              enabledBorder: OutlineInputBorder()),
-                                                                      controller:
-                                                                          wrkmnlsong,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height: screenHeight *
-                                                                          .05), // Add spacing
-                                                                  ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setMusicmanually();
-                                                                    },
-                                                                    child: Text(
-                                                                        'Set'),
-                                                                  )
-                                                                ]),
-                                                          )),
-                                                    );
-                                                  });
-                                            },
-                                            child: Text('Chose manually'),
-                                          )
-                                        ])),
-                              );
-                            });
-                      },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10), // Add spacing
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors.orange,
+                                              // backgroundColor: Colors
+                                              //     .grey[900], // Set background color for dialog
+                                              content: Container(
+                                                  width: screenWidth *
+                                                      0.4, // Responsive width
+                                                  height: screenHeight * 0.2,
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Container(
+                                                            width: screenWidth *
+                                                                .4,
+                                                            child: TextField(
+                                                              decoration: InputDecoration(
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                          borderSide:
+                                                                              BorderSide())),
+                                                              controller:
+                                                                  wrkmnlsong,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              height: screenHeight *
+                                                                  .05), // Add spacing
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              setMusicmanually();
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text('Set'),
+                                                          )
+                                                        ]),
+                                                  )),
+                                            );
+                                          });
+                                    },
+                                    child: Text('Chose manually'),
+                                  )
+                                ])),
+                      );
+                    });
+              },
+              child: Container(
+                  width: screenWidth * .5,
+                  height: screenHeight * .09,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Column(children: [
+                    Text('Work Music PlayList',
+                        style: TextStyle(color: Colors.white)),
+                    SizedBox(
+                      height: screenHeight * .01,
+                    ),
+                    Center(
                       child: Text(
                         song,
                         maxLines: 1,
+                        textAlign: TextAlign.center,
                         overflow: TextOverflow.fade,
                         style: TextStyle(color: Colors.white),
-                      ))
-                ])),
+                      ),
+                    )
+                  ])),
+            ),
           ),
           // Musicwrk2(),
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-                width: screenWidth * .5,
-                height: screenHeight * .09,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Column(children: [
-                  Text(
-                    'Rest Music PlayList',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                backgroundColor: Colors.grey[
-                                    900], // Set background color for dialog
-                                content: Container(
-                                    width:
-                                        screenWidth * 0.8, // Responsive width
-                                    height: screenHeight * 0.7,
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text('Select Music',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18)),
-                                          SizedBox(height: 10), // Add spacing{}
-                                          Expanded(
-                                            child: ListView.builder(
-                                              itemCount: lis.length,
-                                              itemBuilder: (context, index) =>
-                                                  Card(
-                                                child: ListTile(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      songs = lis[index];
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    });
-                                                  },
-                                                  title: Text(lis[index]),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 10), // Add spacing
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      // backgroundColor: Colors
-                                                      //     .grey[900], // Set background color for dialog
-                                                      content: Container(
-                                                          width: screenWidth *
-                                                              0.4, // Responsive width
-                                                          height: screenHeight *
-                                                              0.2,
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.vertical,
-                                                            child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                children: [
-                                                                  Container(
-                                                                    width:
-                                                                        screenWidth *
-                                                                            .4,
-                                                                    child:
-                                                                        TextField(
-                                                                      decoration:
-                                                                          InputDecoration(
-                                                                              enabledBorder: OutlineInputBorder()),
-                                                                      controller:
-                                                                          restmsic,
-                                                                      keyboardType:
-                                                                          TextInputType
-                                                                              .number,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height: screenHeight *
-                                                                          .05), // Add spacing
-                                                                  ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {
-                                                                        restmusic =
-                                                                            restmsic.text;
-                                                                      });
-                                                                    },
-                                                                    child: Text(
-                                                                        'Set'),
-                                                                  )
-                                                                ]),
-                                                          )),
-                                                    );
-                                                  });
-                                            },
-                                            child: Text('Chose Manually'),
-                                          )
-                                        ])),
-                              );
-                            });
-                      },
-                      child: Text(
-                        maxLines: 1,
-                        songs,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(color: Colors.white),
-                      ))
-                ])),
+            padding: EdgeInsets.only(top: screenHeight * .03),
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor:
+                            Colors.orange, // Set background color for dialog
+                        content: Container(
+                            width: screenWidth * 0.8, // Responsive width
+                            height: screenHeight * 0.7,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Select Music',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18)),
+                                  SizedBox(height: 10), // Add spacing{}
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: lis.length,
+                                      itemBuilder: (context, index) => Card(
+                                        child: ListTile(
+                                          onTap: () {
+                                            setState(() {
+                                              songs = lis[index];
+                                              Navigator.of(context).pop();
+                                            });
+                                          },
+                                          title: Text(lis[index]),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10), // Add spacing
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors.orange,
+                                              // backgroundColor: Colors
+                                              //     .grey[900], // Set background color for dialog
+                                              content: Container(
+                                                  width: screenWidth *
+                                                      0.4, // Responsive width
+                                                  height: screenHeight * 0.2,
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Container(
+                                                            width: screenWidth *
+                                                                .4,
+                                                            child: TextField(
+                                                              decoration: InputDecoration(
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder()),
+                                                              controller:
+                                                                  restmsic,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              height: screenHeight *
+                                                                  .05), // Add spacing
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              setRMusicmanually();
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text('Set'),
+                                                          )
+                                                        ]),
+                                                  )),
+                                            );
+                                          });
+                                    },
+                                    child: Text('Chose Manually'),
+                                  )
+                                ])),
+                      );
+                    });
+              },
+              child: Container(
+                  width: screenWidth * .5,
+                  height: screenHeight * .09,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Column(children: [
+                    Text(
+                      'Rest Music PlayList',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: screenHeight * .01,
+                    ),
+                    Text(
+                      maxLines: 1,
+                      songs,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ])),
+            ),
           ),
           SizedBox(
-            height: 20,
+            height: screenHeight * .02,
           ),
           ElevatedButton(
               onPressed: () {

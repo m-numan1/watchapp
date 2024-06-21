@@ -30,8 +30,8 @@ class _WorkPageState extends State<WorkPage> {
   @override
   void initState() {
     super.initState();
-
     val = int.parse(widget.worktime);
+    increment();
   }
 
   void navigateToSecondScreenAfterDelay() {

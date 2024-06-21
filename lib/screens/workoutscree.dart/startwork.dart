@@ -47,7 +47,7 @@ class _StartWorkState extends State<StartWork> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>const HomeWorkOut()));
+                                builder: (context) => const HomeWorkOut()));
                           },
                           child: Container(
                             decoration: const BoxDecoration(
@@ -61,7 +61,7 @@ class _StartWorkState extends State<StartWork> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(10),
                           child: Text(
                             'Save WorkOut',
                             style: TextStyle(color: Colors.white, fontSize: 12),
@@ -120,22 +120,24 @@ class _StartWorkState extends State<StartWork> {
                   ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * .08,
-                      vertical: screenHeight * .08),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * .08,
+                    vertical: screenHeight * .08),
+                child: SizedBox(
+                  height: screenHeight * .4,
+                  width: screenWidth,
                   child: ListView.builder(
                     itemCount: 1,
                     itemBuilder: (context, index) => Center(
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: screenWidth * .05,
-                            right: screenWidth * .05,
-                            bottom: screenHeight * .05),
+                          left: screenWidth * .05,
+                          right: screenWidth * .05,
+                        ),
                         child: Container(
                           width: double.infinity,
-                          height: screenHeight * .13,
+                          height: screenHeight * .11,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),
@@ -145,30 +147,39 @@ class _StartWorkState extends State<StartWork> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Workout Time",
-                                    style: TextStyle(color: Colors.black),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 6.0),
+                                    child: Text(
+                                      "Workout Time",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.only(top: 4.0),
                                     child: Text(
-                                      widget.worktime.toString(),
+                                      "00:" + widget.worktime.toString(),
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   )
                                 ],
                               ),
                               Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Rest time",
-                                    style: TextStyle(color: Colors.black),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 6.0),
+                                    child: Text(
+                                      "Rest time",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.only(top: 4.0),
                                     child: Text(
-                                      widget.restime.toString(),
+                                      "00:" + widget.restime.toString(),
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   )

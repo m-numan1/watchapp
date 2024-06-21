@@ -28,6 +28,7 @@ class _MusicState extends State<Music> {
               style: TextStyle(color: Colors.white),
             ),
             Text(widget.music ?? " ",
+            textAlign: TextAlign.center,
                 maxLines: 1, style: TextStyle(color: Colors.white)),
           ])),
     );
