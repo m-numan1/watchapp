@@ -198,7 +198,7 @@ class _StartWorkState extends State<StartWork> {
                                                 worktime:
                                                     widget.worktime.toString(),
                                                 wrkmusic: widget.wrkmusic,
-                                                restime: widget.restmusic,
+                                                restime: widget.restime,
                                                 restmusic: widget.restmusic)),
                                       );
                                     },
@@ -225,7 +225,7 @@ class _StartWorkState extends State<StartWork> {
                               set: widget.set,
                               worktime: widget.worktime.toString(),
                               wrkmusic: widget.wrkmusic,
-                              restime: widget.restmusic,
+                              restime: widget.restime,
                               restmusic: widget.restmusic)),
                     );
                   },

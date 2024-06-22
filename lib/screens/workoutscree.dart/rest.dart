@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:watch_app/widgets/music.dart';
 
 class RestPage extends StatefulWidget {
-  String resttime, restmusic, set;
+  String restmusic, set;
+  int? resttime;
   RestPage(
       {super.key,
       required this.resttime,
@@ -17,62 +18,68 @@ class RestPage extends StatefulWidget {
 
 class _RestPageState extends State<RestPage> {
   Duration pausedDuration = Duration.zero;
+  int delay = 0;
   double volume = 0.3;
-  int val = 15;
+  int val = 0;
   double newval = 1;
   late Timer _timer;
   int set = 0;
   @override
   void initState() {
     super.initState();
+    val = widget.resttime!;
     increment();
+
+    // delay = int.parse(widget.resttime);
   }
 
-  void pause() {
-    if (isplaying) {
-      player.pause();
-      _timer?.cancel();
-      //pausedDuration = Duration(seconds: val);  // Save the remaining time
-      isplaying = false;
-    }
+  void pause() async {
+    await player.stop();
+    _timer.cancel();
+    // if (isplaying) {
+    //   player.pause();
+    //   _timer?.cancel();
+    //   //pausedDuration = Duration(seconds: val);  // Save the remaining time
+    //   isplaying = false;
+    // }
   }
 
-  void resume() {
-    if (!isplaying) {
-      player.resume();
-      isplaying = true;
-      val = pausedDuration.inSeconds;
+  // void resume() {
+  //   if (!isplaying) {
+  //     player.resume();
+  //     isplaying = true;
+  //     val = pausedDuration.inSeconds;
 
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        _timer = timer;
-        val--;
-        setState(() {
-          if (set == int.parse(widget.set)) {
-            player.stop();
-            isplaying = false;
-          }
-          newval++;
+  //     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //       _timer = timer;
+  //       val--;
+  //       setState(() {
+  //         if (set == int.parse(widget.set)) {
+  //           player.stop();
+  //           isplaying = false;
+  //         }
+  //         newval++;
 
-          if (val < 1) {
-            player.stop();
-            _timer.cancel();
-            isplaying = false;
-            navigateToSecondScreenAfterDelay();
-            Future.delayed(Duration(seconds: int.parse(widget.resttime)))
-                .then((_) {
-              setState(() {
-                newval = 0;
-                if (set < int.parse(widget.set)) {
-                  set++;
-                  val = int.parse(widget.resttime);
-                }
-              });
-            });
-          }
-        });
-      });
-    }
-  }
+  //         if (val < 1) {
+  //           player.stop();
+  //           _timer.cancel();
+  //           isplaying = false;
+  //           navigateToSecondScreenAfterDelay();
+  //           Future.delayed(Duration(seconds: int.parse(widget.resttime)))
+  //               .then((_) {
+  //             setState(() {
+  //               newval = 0;
+  //               if (set < int.parse(widget.set)) {
+  //                 set++;
+  //                 val = int.parse(widget.resttime);
+  //               }
+  //             });
+  //           });
+  //         }
+  //       });
+  //     });
+  //   }
+  // }
 
   // @override
   // void dispose() {
@@ -81,9 +88,8 @@ class _RestPageState extends State<RestPage> {
   // }
 
   void navigateToSecondScreenAfterDelay() {
-    Timer(Duration(seconds: int.parse(widget.resttime)), () {
-      Navigator.pop(context);
-    });
+    Navigator.pop(context);
+    _timer.cancel();
   }
 
   final player = AudioPlayer();
@@ -91,24 +97,31 @@ class _RestPageState extends State<RestPage> {
   Future<void> increment() async {
     await player.play(UrlSource(widget.restmusic));
     isplaying = true;
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       _timer = timer;
       setState(() {
+        if (set == int.parse(widget.set)) {
+          player.stop();
+        }
         val--;
         newval++;
         if (val < 1) {
-          val = 15;
-          set++;
           player.stop();
           isplaying = false;
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
-          Future.delayed(Duration(seconds: int.parse(widget.resttime)))
-              .then((_) {
+          if (set < int.parse(widget.set)) {
+            set++;
+            val = widget.resttime!;
+          }
+          Future.delayed(Duration(seconds: 15)).then((_) {
             setState(() {
               newval = 1;
             });
-          }); //int.parse(widget.resttime);
+          });
+
+          //int.parse(widget.resttime);
         }
       });
     });
@@ -136,8 +149,10 @@ class _RestPageState extends State<RestPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
+                        onTap: () async {
+                          Navigator.pop(context);
+                          await player.stop();
+                          _timer.cancel();
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -171,7 +186,7 @@ class _RestPageState extends State<RestPage> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: screenWidth * .06,
+                left: screenWidth * .009,
                 right: (screenWidth - (newval * 20)).clamp(0, double.infinity),
               ),
               child: Image.asset('assets/images/vector.png'),
@@ -182,7 +197,7 @@ class _RestPageState extends State<RestPage> {
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * .07),
                   child: Container(
                     width: double.infinity,
-                    height: screenHeight * .09,
+                    height: screenHeight * .06,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(25)),
@@ -207,7 +222,7 @@ class _RestPageState extends State<RestPage> {
                   ),
                   child: Container(
                     width: newval * 10,
-                    height: screenHeight * .095,
+                    height: screenHeight * .06,
                     decoration: BoxDecoration(
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(25)),
@@ -259,7 +274,8 @@ class _RestPageState extends State<RestPage> {
                           SizedBox(
                             height: 8,
                           ),
-                          Text("${set.toString()}/${widget.set}"),
+                          Text("${set.toString()}/${widget.set}",
+                              style: TextStyle(color: Colors.white)),
                         ]),
                       )),
             ),
@@ -315,8 +331,9 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      pause;
+                    onTap: () async {
+                      await player.stop();
+                      _timer.cancel();
                     },
                     child: Container(
                       height: screenHeight * .06,
@@ -335,7 +352,7 @@ class _RestPageState extends State<RestPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      resume();
+                      await increment();
                     },
                     child: Container(
                       height: screenHeight * .06,

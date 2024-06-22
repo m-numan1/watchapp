@@ -31,14 +31,14 @@ class _NewWorkOutState extends State<NewWorkOut> {
       "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   String music3 =
       "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
-
+  Duration time = Duration();
   List lis = [];
   String song = '...';
   String restmusic = '';
   CollectionReference users = FirebaseFirestore.instance.collection('User');
   final email = FirebaseAuth.instance.currentUser;
-  Future<void> add(
-      String music, String restMusic, int sets, int time, int resttime) async {
+  Future<void> add(String music, String restMusic, int sets, int? time,
+      int? resttime) async {
     Map<String, dynamic> data = {
       'workMusic': music,
       'restMusic': restMusic,
@@ -69,7 +69,6 @@ class _NewWorkOutState extends State<NewWorkOut> {
     wrkmnlsong.dispose();
   }
 
-  
   void setMusicmanually() {
     setState(() {
       song = wrkmnlsong.text;
@@ -78,11 +77,10 @@ class _NewWorkOutState extends State<NewWorkOut> {
 
   void setRMusicmanually() {
     setState(() {
-      restmusic = restmsic.text;
+      songs = restmsic.text;
     });
   }
 
-  int time = 00;
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -387,6 +385,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                   SizedBox(height: 10), // Add spacing
                                   ElevatedButton(
                                     onPressed: () {
+                                      Navigator.pop(context);
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -505,6 +504,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                   SizedBox(height: 10), // Add spacing
                                   ElevatedButton(
                                     onPressed: () {
+                                      Navigator.pop(context);
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -590,8 +590,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   song,
                   songs,
                   set!,
-                  int.parse(worktime.text),
-                  int.parse(resttim.text),
+                  int.tryParse(worktime.text),
+                  int.tryParse(resttim.text),
                 );
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const StartWork()));

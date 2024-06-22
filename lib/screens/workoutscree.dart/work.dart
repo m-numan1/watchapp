@@ -8,7 +8,8 @@ import 'package:watch_app/widgets/workmusicplaylist.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class WorkPage extends StatefulWidget {
-  String worktime, restime, wrkmusic, restmusic, set;
+  String worktime, wrkmusic, restmusic, set;
+  int restime;
   WorkPage(
       {super.key,
       required this.set,
@@ -54,30 +55,29 @@ class _WorkPageState extends State<WorkPage> {
   // String music3 =
   //     "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   final player = AudioPlayer();
-  bool isPlaying = false; // Track if the player is currently playing
-  Duration pausedDuration = Duration.zero;
+  //bool isPlaying = false; // Track if the player is currently playing
+  //Duration pausedDuration = Duration.zero;
   Future<void> increment() async {
     await player.play(
       UrlSource(widget.wrkmusic),
     );
-    isPlaying = true;
+    //isPlaying = true;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
       val--;
       setState(() {
         if (set == int.parse(widget.set)) {
           player.stop();
-          isPlaying = false;
+          //isPlaying = false;
         }
         newval++;
 
         if (val < 1) {
           player.stop();
-          isPlaying = false;
+          //isPlaying = false;
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
-          Future.delayed(Duration(seconds: int.parse(widget.restime)))
-              .then((_) {
+          Future.delayed(Duration(seconds: widget.restime)).then((_) {
             setState(() {
               newval = 0;
               if (set < int.parse(widget.set)) {
@@ -94,7 +94,6 @@ class _WorkPageState extends State<WorkPage> {
 
   @override
   Widget build(BuildContext context) {
-    //increment();
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -116,8 +115,10 @@ class _WorkPageState extends State<WorkPage> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Navigator.pop(context);
+                          await player.stop();
+                          _timer.cancel();
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -151,7 +152,7 @@ class _WorkPageState extends State<WorkPage> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: screenWidth * .06,
+                left: screenWidth * .009,
                 right: (screenWidth - (newval * 15)).clamp(0, double.infinity),
               ),
               child: Image.asset('assets/images/vector.png'),
@@ -162,7 +163,7 @@ class _WorkPageState extends State<WorkPage> {
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * .07),
                   child: Container(
                     width: double.infinity,
-                    height: screenHeight * .09,
+                    height: screenHeight * .06,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(25)),
@@ -187,7 +188,7 @@ class _WorkPageState extends State<WorkPage> {
                   ),
                   child: Container(
                     width: newval * 7,
-                    height: screenHeight * .095,
+                    height: screenHeight * .06,
                     decoration: BoxDecoration(
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(25)),
@@ -273,67 +274,61 @@ class _WorkPageState extends State<WorkPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  isPlaying == true
-                      ? Text('')
-                      : GestureDetector(
-                          onTap: () async {
-                            await increment();
-                          },
-                          child: Container(
-                            height: screenHeight * .06,
-                            width: screenWidth * .17,
-                            decoration: BoxDecoration(
-                              color: Colors.green[800],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Center(
-                              child: Text('Start'),
-                            ),
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: () async {
+                      await increment();
+                    },
+                    child: Container(
+                      height: screenHeight * .06,
+                      width: screenWidth * .17,
+                      decoration: BoxDecoration(
+                        color: Colors.green[800],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: const Center(
+                        child: Text('Start'),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
-                  isPlaying == false
-                      ? Text('')
-                      : GestureDetector(
-                          onTap: () async {
-                            pause();
-                            //_timer.cancel();
-                          },
-                          child: Container(
-                            height: screenHeight * .06,
-                            width: screenWidth * .17,
-                            decoration: BoxDecoration(
-                              color: Colors.red[800],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Center(
-                              child: Text('Stop'),
-                            ),
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: () async {
+                      pause();
+                      _timer.cancel();
+                    },
+                    child: Container(
+                      height: screenHeight * .06,
+                      width: screenWidth * .17,
+                      decoration: BoxDecoration(
+                        color: Colors.red[800],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: const Center(
+                        child: Text('Stop'),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
-                  isPlaying == false
-                      ? Text('')
-                      : GestureDetector(
-                          onTap: () async {
-                            resume;
-                          },
-                          child: Container(
-                            height: screenHeight * .06,
-                            width: screenWidth * .17,
-                            decoration: BoxDecoration(
-                              color: Colors.blue[200],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: const Center(
-                              child: Text('Resume'),
-                            ),
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: () async {
+                      await increment();
+                    },
+                    child: Container(
+                      height: screenHeight * .06,
+                      width: screenWidth * .17,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[200],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: const Center(
+                        child: Text('Resume'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -344,19 +339,14 @@ class _WorkPageState extends State<WorkPage> {
   }
 
   void pause() async {
-    if (isPlaying) {
-      await player.pause();
-      _timer?.cancel();
-      pausedDuration = Duration(seconds: val); // Save the remaining time
-      isPlaying = false;
-    }
+    await player.stop();
   }
 
-  void resume() async {
-    if (!isPlaying) {
-      await player.resume();
-      isPlaying = true;
-      // val = pausedDuration.inSeconds;
-    }
-  }
+  // void resume() async {
+  //   if (!isPlaying) {
+  //     await player.resume();
+  //     isPlaying = true;
+  //     // val = pausedDuration.inSeconds;
+  //   }
+  // }
 }
