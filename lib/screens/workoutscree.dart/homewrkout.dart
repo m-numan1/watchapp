@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/workoutscree.dart/newworkout.dart';
 import 'package:watch_app/widgets/fetchwork.dart';
@@ -22,10 +23,11 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
     fetchdata();
   }
 
+  final email = FirebaseAuth.instance.currentUser;
   Future<void> fetchdata() async {
     try {
       QuerySnapshot snapshot = await users
-          .doc('days')
+          .doc(email!.email)
           .collection((_selectedIndex + 1).toString())
           .get();
 
@@ -240,7 +242,7 @@ class _HomeWorkOutState extends State<HomeWorkOut> {
                     padding: EdgeInsets.only(top: screenHeight * .03),
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
+                      //shrinkWrap: true,
                       itemCount: dataList.length,
                       itemBuilder: (context, index) {
                         //print(dataList);

@@ -16,7 +16,8 @@ class RestPage extends StatefulWidget {
 }
 
 class _RestPageState extends State<RestPage> {
-  double volume = 10;
+  Duration pausedDuration = Duration.zero;
+  double volume = 0.3;
   int val = 15;
   double newval = 1;
   late Timer _timer;
@@ -27,6 +28,52 @@ class _RestPageState extends State<RestPage> {
     increment();
   }
 
+  void pause() {
+    if (isplaying) {
+      player.pause();
+      _timer?.cancel();
+      //pausedDuration = Duration(seconds: val);  // Save the remaining time
+      isplaying = false;
+    }
+  }
+
+  void resume() {
+    if (!isplaying) {
+      player.resume();
+      isplaying = true;
+      val = pausedDuration.inSeconds;
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        _timer = timer;
+        val--;
+        setState(() {
+          if (set == int.parse(widget.set)) {
+            player.stop();
+            isplaying = false;
+          }
+          newval++;
+
+          if (val < 1) {
+            player.stop();
+            _timer.cancel();
+            isplaying = false;
+            navigateToSecondScreenAfterDelay();
+            Future.delayed(Duration(seconds: int.parse(widget.resttime)))
+                .then((_) {
+              setState(() {
+                newval = 0;
+                if (set < int.parse(widget.set)) {
+                  set++;
+                  val = int.parse(widget.resttime);
+                }
+              });
+            });
+          }
+        });
+      });
+    }
+  }
+
   // @override
   // void dispose() {
   //   _timer.cancel();
@@ -34,14 +81,16 @@ class _RestPageState extends State<RestPage> {
   // }
 
   void navigateToSecondScreenAfterDelay() {
-    Timer(Duration(seconds: 15), () {
+    Timer(Duration(seconds: int.parse(widget.resttime)), () {
       Navigator.pop(context);
     });
   }
 
   final player = AudioPlayer();
+  bool isplaying = false;
   Future<void> increment() async {
-    await player.play(volume: volume, UrlSource(widget.restmusic));
+    await player.play(UrlSource(widget.restmusic));
+    isplaying = true;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
       setState(() {
@@ -51,9 +100,11 @@ class _RestPageState extends State<RestPage> {
           val = 15;
           set++;
           player.stop();
+          isplaying = false;
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
-          Future.delayed(Duration(seconds: 10)).then((_) {
+          Future.delayed(Duration(seconds: int.parse(widget.resttime)))
+              .then((_) {
             setState(() {
               newval = 1;
             });
@@ -228,11 +279,12 @@ class _RestPageState extends State<RestPage> {
             Slider(
                 thumbColor: Colors.orange,
                 activeColor: Colors.orange,
-                max: 30,
-                min: 0,
+                max: 1.0,
+                min: 0.0,
                 value: volume,
-                onChanged: (value) {
+                onChanged: (value) async {
                   volume = value;
+                  await player.setVolume(volume);
                 }),
             Padding(
               padding: EdgeInsets.only(
@@ -263,8 +315,8 @@ class _RestPageState extends State<RestPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      await player.stop();
+                    onTap: () {
+                      pause;
                     },
                     child: Container(
                       height: screenHeight * .06,
@@ -283,7 +335,7 @@ class _RestPageState extends State<RestPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await player.resume();
+                      resume();
                     },
                     child: Container(
                       height: screenHeight * .06,

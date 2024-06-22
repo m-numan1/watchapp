@@ -25,7 +25,7 @@ class _WorkPageState extends State<WorkPage> {
   late int val;
   double newval = 1;
   int set = 0;
-  double volume = 10;
+  double volume = 0.3;
   late Timer _timer;
   @override
   void initState() {
@@ -54,23 +54,30 @@ class _WorkPageState extends State<WorkPage> {
   // String music3 =
   //     "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3";
   final player = AudioPlayer();
-
+  bool isPlaying = false; // Track if the player is currently playing
+  Duration pausedDuration = Duration.zero;
   Future<void> increment() async {
-    await player.play(volume: volume, UrlSource(widget.wrkmusic));
+    await player.play(
+      UrlSource(widget.wrkmusic),
+    );
+    isPlaying = true;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _timer = timer;
       val--;
       setState(() {
         if (set == int.parse(widget.set)) {
           player.stop();
+          isPlaying = false;
         }
         newval++;
 
         if (val < 1) {
           player.stop();
+          isPlaying = false;
           _timer.cancel();
           navigateToSecondScreenAfterDelay();
-          Future.delayed(Duration(seconds: 10)).then((_) {
+          Future.delayed(Duration(seconds: int.parse(widget.restime)))
+              .then((_) {
             setState(() {
               newval = 0;
               if (set < int.parse(widget.set)) {
@@ -249,11 +256,13 @@ class _WorkPageState extends State<WorkPage> {
             Slider(
                 thumbColor: Colors.orange,
                 activeColor: Colors.orange,
-                max: 30,
-                min: 0,
+                max: 1.0,
+                min: 0.0,
                 value: volume,
-                onChanged: (value) {
+                onChanged: (value) async {
                   volume = value;
+                  await player.setVolume(volume);
+                  //volume = value;
                 }),
             Padding(
               padding: EdgeInsets.only(
@@ -264,61 +273,67 @@ class _WorkPageState extends State<WorkPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      await increment();
-                    },
-                    child: Container(
-                      height: screenHeight * .06,
-                      width: screenWidth * .17,
-                      decoration: BoxDecoration(
-                        color: Colors.green[800],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Center(
-                        child: Text('Start'),
-                      ),
-                    ),
-                  ),
+                  isPlaying == true
+                      ? Text('')
+                      : GestureDetector(
+                          onTap: () async {
+                            await increment();
+                          },
+                          child: Container(
+                            height: screenHeight * .06,
+                            width: screenWidth * .17,
+                            decoration: BoxDecoration(
+                              color: Colors.green[800],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Center(
+                              child: Text('Start'),
+                            ),
+                          ),
+                        ),
                   const SizedBox(
                     width: 10,
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      await player.stop();
-                      _timer.cancel();
-                    },
-                    child: Container(
-                      height: screenHeight * .06,
-                      width: screenWidth * .17,
-                      decoration: BoxDecoration(
-                        color: Colors.red[800],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Center(
-                        child: Text('Stop'),
-                      ),
-                    ),
-                  ),
+                  isPlaying == false
+                      ? Text('')
+                      : GestureDetector(
+                          onTap: () async {
+                            pause();
+                            //_timer.cancel();
+                          },
+                          child: Container(
+                            height: screenHeight * .06,
+                            width: screenWidth * .17,
+                            decoration: BoxDecoration(
+                              color: Colors.red[800],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Center(
+                              child: Text('Stop'),
+                            ),
+                          ),
+                        ),
                   const SizedBox(
                     width: 10,
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      await player.resume();
-                    },
-                    child: Container(
-                      height: screenHeight * .06,
-                      width: screenWidth * .17,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[200],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Center(
-                        child: Text('Resume'),
-                      ),
-                    ),
-                  ),
+                  isPlaying == false
+                      ? Text('')
+                      : GestureDetector(
+                          onTap: () async {
+                            resume;
+                          },
+                          child: Container(
+                            height: screenHeight * .06,
+                            width: screenWidth * .17,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[200],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Center(
+                              child: Text('Resume'),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             )
@@ -326,5 +341,22 @@ class _WorkPageState extends State<WorkPage> {
         ),
       ),
     );
+  }
+
+  void pause() async {
+    if (isPlaying) {
+      await player.pause();
+      _timer?.cancel();
+      pausedDuration = Duration(seconds: val); // Save the remaining time
+      isPlaying = false;
+    }
+  }
+
+  void resume() async {
+    if (!isPlaying) {
+      await player.resume();
+      isPlaying = true;
+      // val = pausedDuration.inSeconds;
+    }
   }
 }

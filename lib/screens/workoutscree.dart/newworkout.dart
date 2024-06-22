@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_app/screens/workoutscree.dart/homewrkout.dart';
 
@@ -35,7 +36,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
   String song = '...';
   String restmusic = '';
   CollectionReference users = FirebaseFirestore.instance.collection('User');
-
+  final email = FirebaseAuth.instance.currentUser;
   Future<void> add(
       String music, String restMusic, int sets, int time, int resttime) async {
     Map<String, dynamic> data = {
@@ -45,7 +46,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
       'worktime': time,
       'resttime': resttime,
     };
-    await users.doc('days').collection(widget.day).add(data).then(
+    await users.doc(email!.email).collection(widget.day).add(data).then(
           (value) => Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const HomeWorkOut())),
         ); //add(data);
@@ -68,6 +69,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
     wrkmnlsong.dispose();
   }
 
+  
   void setMusicmanually() {
     setState(() {
       song = wrkmnlsong.text;

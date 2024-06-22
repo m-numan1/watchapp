@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
             'email': email.text.trim(),
             'mobile': password.text.trim(),
           };
-          users.add(data);
+         // users.add(data);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => const LogInPage()));
         },
